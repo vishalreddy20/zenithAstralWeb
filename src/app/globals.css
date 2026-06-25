@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan: #00e5ff;
+  --gold: #ffd700;
+  --space: #02040a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--space);
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Star background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 20%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 30%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(2px 2px at 50% 50%, rgba(0,229,255,0.3) 0%, transparent 100%),
+    radial-gradient(2px 2px at 80% 20%, rgba(255,215,0,0.2) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #05080f; }
+::-webkit-scrollbar-thumb { background: #00e5ff44; border-radius: 2px; }
+
+/* Panel glass effect */
+.glass {
+  background: rgba(5, 8, 15, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+}
+
+.glass-gold {
+  background: rgba(5, 8, 15, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Globe container */
+#cesium-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* MapLibre canvas — keep space background visible */
+.maplibregl-canvas {
+  background: transparent !important;
+}
+.maplibregl-map {
+  background: #02040a !important;
+}
+/* Hide MapLibre attribution (shown in our footer) */
+.maplibregl-ctrl-attrib {
+  display: none !important;
+}
+
+/* Glow text */
+.glow-cyan { text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff44; }
+.glow-gold { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd70044; }
+
+/* Pulse dot */
+.pulse-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 6px #00e5ff;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* Card hover */
+.celestial-card {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.celestial-card:hover {
+  background: rgba(0, 229, 255, 0.08) !important;
+  border-color: rgba(0, 229, 255, 0.4) !important;
+  transform: translateX(2px);
+}
+
+/* Orbit badge */
+.orbit-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(0,229,255,0.1);
+  border: 1px solid rgba(0,229,255,0.3);
+  color: #00e5ff;
+}
+
+/* Loading shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #05080f 25%, #0d1525 50%, #05080f 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Mobile drag handle */
+.drag-handle {
+  width: 32px;
+  height: 4px;
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 2px;
+  margin: 0 auto 12px;
+}
+
+/* Mobile responsive overlay */
+@media (max-width: 768px) {
+  .side-panel {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    max-height: 60vh;
+    border-radius: 16px 16px 0 0;
+    overflow-y: auto;
+    /* Appears above the Cesium globe touch surface */
+    z-index: 30 !important;
+  }
+  .top-bar {
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+    flex-wrap: wrap;
+  }
+  #cesium-container {
+    touch-action: pan-x pan-y;
+  }
+}
+
+@layer base {
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
+}
