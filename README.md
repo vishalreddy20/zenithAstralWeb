@@ -2,6 +2,7 @@
 
 **Team:** ZenithForge
 **Hackathon:** AstralWeb Innovate (Round 2)
+**Live URL:** [https://zenith-astral-web.vercel.app/](https://zenith-astral-web.vercel.app/)
 
 ## 🌌 Project Overview
 Project Zenith: The Celestial Eye is a dynamic, interactive web application that functions as a real-time cosmic radar. It bridges the gap between humanity and the cosmos by allowing users to select any geographic coordinate on Earth and instantly visualize the celestial bodies passing through that location's zenith. 
